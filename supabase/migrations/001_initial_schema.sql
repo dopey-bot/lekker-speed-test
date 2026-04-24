@@ -1,6 +1,10 @@
 -- Lekker Speed Test — initial schema
 -- Run this in the Supabase SQL editor, or via `supabase db push`.
 
+-- =====================================================================
+-- Tables
+-- =====================================================================
+
 create table if not exists public.slogans (
   id uuid primary key default gen_random_uuid(),
   text text not null,
@@ -62,6 +66,10 @@ create table if not exists public.advertiser_enquiries (
   created_at timestamptz not null default now()
 );
 
+-- =====================================================================
+-- Row-Level Security
+-- =====================================================================
+
 alter table public.slogans enable row level security;
 alter table public.slogan_suggestions enable row level security;
 alter table public.test_results enable row level security;
@@ -121,6 +129,10 @@ create policy "Admin all ads" on public.ads
 drop policy if exists "Admin all enquiries" on public.advertiser_enquiries;
 create policy "Admin all enquiries" on public.advertiser_enquiries
   for all to authenticated using (true) with check (true);
+
+-- =====================================================================
+-- Storage bucket for ad banner images
+-- =====================================================================
 
 insert into storage.buckets (id, name, public)
 values ('ad-banners', 'ad-banners', true)
