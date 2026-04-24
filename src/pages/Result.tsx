@@ -94,7 +94,11 @@ export default function ResultPage() {
         title={title}
         description={description}
         path={`/result/${id}`}
-        ogImage={`${import.meta.env.VITE_SITE_URL || ""}/api/og?id=${id}`}
+        ogImage={`${import.meta.env.VITE_SITE_URL || ""}/api/og?dl=${formatMbps(
+          result.download_mbps
+        )}&ul=${formatMbps(result.upload_mbps)}&ping=${Math.round(
+          result.ping_ms
+        )}${slogan ? `&slogan=${encodeURIComponent(slogan.text)}` : ""}`}
       />
       <div className="container py-10 md:py-16 max-w-2xl mx-auto space-y-6">
         <ResultCard
